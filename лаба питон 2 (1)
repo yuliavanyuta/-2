@@ -41,13 +41,8 @@ def array_fill(array_fi, res, st):
         for k in range(10):
             if abs(array_fi[i][0] - res[9 - k]) < st:
                 for j in range(9):
-                    if j == k:
+                    if 8 - j == k + 2:
                         array_fi[i][j + 1] = 1
-                    if j == 4 or j == 5 or j == 6 or j == 7 or j == 8 or j == 9:
-                        if 8 - j == k:
-                            array_fi[i][j + 1] = 1
-                    if (i == 8 or i == 9) and (j == 0):
-                        break
     return array_fi
 
 
@@ -63,8 +58,7 @@ def print_plot(plot):
                 line += RED + '  ' + WHITE
         line += END
         print(line)
-    print(WHITE + '0    1 2 3 4 5 6 7 8 9' + END)
-
+    print(WHITE + '0   1 2 3 4 5 6 7 8 9 10' + END)
 
 RED = esc(41)
 BLUE = esc(44)
@@ -86,7 +80,7 @@ result = [0 for i in range(10)]
 
 
 for i in range(10):
-    result[i] = i ** 3
+    result[i] = i ** 2
 print(result)
 
 # намечаем шаг, с которым будет нанесен цвет (сколько длится один штрих, скажем так)
