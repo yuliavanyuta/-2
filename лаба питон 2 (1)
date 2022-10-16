@@ -1,0 +1,102 @@
+# начинаем работу
+# начну с последнего - нарисуем диаграмму по таблице из первой лабы
+
+def esc(code):
+    return f'\u001b[{code}m'
+
+# у меня 1 вариант, поэтому рисуем флаг Франции
+def flag_cz():
+    for i in range(3):
+        print(BLUE + '  ' * (6) + WHITE + '  ' * (6) + RED + '  ' * (6) + END)
+
+    for i in range(3):
+        print(BLUE + '  ' * (6) + WHITE + '  ' * (6) + RED + '  ' * (6) + END)
+
+# теперь рисуем узор по варианту
+def uzor_pat():
+    for j in range(1):
+        print(WHITE + '  ' * (14) + END)
+    for j in range(3):
+        print(WHITE + '  ' * (1) + BLACK + '  ' * (4) + WHITE + '  ' * (4) + BLACK + '  ' * (4) + WHITE + '  ' * (1) + END)
+    for j in range(3):
+        print(WHITE + '  ' * (1) + WHITE + '  ' * (4) + BLACK + '  ' * (4) + WHITE + '  ' * (4) + WHITE + '  ' * (1) + END)
+    for j in range(3):
+        print(WHITE + '  ' * (1) + BLACK + '  ' * (4) + WHITE + '  ' * (4) + BLACK + '  ' * (4) + WHITE + '  ' * (1) + END)
+    for j in range(1):
+        print(WHITE + '  ' * (14) + END)
+
+# начинаем рисовать заданный график функции
+def array_init(array_in, st):
+    for i in range(10):
+        for j in range(10):
+            if j == 0:
+                array_in[i][j] = round(st * (8 - i) + st, 1)
+            if i == 9:
+                array_in[i][j] = round(j, 1)
+    return array_in
+
+
+def array_fill(array_fi, res, st):
+    for i in range(9):
+        for k in range(10):
+            if abs(array_fi[i][0] - res[9 - k]) < st:
+                for j in range(9):
+                    if j == k:
+                        array_fi[i][j + 1] = 1
+                    if j == 4 or j == 5 or j == 6 or j == 7 or j == 8 or j == 9:
+                        if 8 - j == k:
+                            array_fi[i][j + 1] = 1
+                    if (i == 8 or i == 9) and (j == 0):
+                        break
+    return array_fi
+
+
+def print_plot(plot):
+    for i in range(9):
+        line = ''
+        for j in range(10):
+            if j == 0:
+                line += WHITE + str(plot[i][j])
+            if plot[i][j] == 0:
+                line += '  '
+            elif plot[i][j] == 1:
+                line += RED + '  ' + WHITE
+        line += END
+        print(line)
+    print(WHITE + '0    1 2 3 4 5 6 7 8 9' + END)
+
+
+RED = esc(41)
+BLUE = esc(44)
+WHITE = esc(47)
+BLACK = esc(48)
+END = esc(0)
+
+# после обозначения цветов выводим получившийся рисунок флага
+print('Флаг Франции:')
+flag_cz()
+# выводим получившийся узор
+print('Узор А:')
+uzor_pat()
+
+# осталось вывести график функции, намечаем для него поле, где будет
+# проведена линия, обозначающая поведение графика
+array_plot = [[0 for col in range(10)] for row in range(10)]
+result = [0 for i in range(10)]
+
+
+for i in range(10):
+    result[i] = i ** 3
+print(result)
+
+# намечаем шаг, с которым будет нанесен цвет (сколько длится один штрих, скажем так)
+step = round(abs((result[9] - result[0])) / 9, 1)
+
+# выводим график
+array_init(array_plot, step)
+array_fill(array_plot, result, step)
+print('График функции y = x^2:')
+print_plot(array_plot)
+
+
+# последнее задание пропишем отдельным кодом
