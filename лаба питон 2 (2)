@@ -1,0 +1,37 @@
+def zvet(a):
+    b = '\u001b[' + str(a) + 'm'
+    return b
+
+
+# импортируем чтение csv-файла и по условию запишем переменные
+import csv
+
+vsevo = do = posle = 0
+
+with open('books.csv', 'r') as f:
+    table = csv.reader(f, delimiter=';')
+    for row in table:
+        vsevo += 1
+        if vsevo >= 2 and int(row[6][6:10]) < 2014:
+            do += 1
+        else:
+            posle += 1
+
+
+print(f'{do}-кол-во книг, датируемых до 2014\n{posle}-после 2014\nМасштаб диаграммы 1:1000')
+
+
+def diagramma():
+    for i in range(1, 6):
+        if i % 2 != 0:
+            print('          |' + zvet(40) + '  ' * 10 + zvet(0))
+        elif i == 2:
+            print('до 2014   |' + zvet(46) + '  ' * (do // 1000) + zvet(40) + '  ' * (
+                    10 - do // 1000) + zvet(0))
+        elif i == 4:
+            print('после 2014|' + zvet(46) + '  ' * (posle // 1000) + zvet(40) + '  ' * (
+                    10 - posle // 1000) + zvet(0))
+    print(f'           1|2|3|4|5|6|7|8|9')
+
+
+diagramma()
